@@ -19,11 +19,6 @@ struct HoboTracker: App {
                         Label("Activity", systemImage: "square.grid.2x2")
                     }
                 
-                CreateHabitView()
-                    .tabItem {
-                        Label("Create", systemImage: "plus.circle")
-                    }
-                
                 ExampleHabitsView()
                     .tabItem {
                         Label("Examples", systemImage: "sparkles")

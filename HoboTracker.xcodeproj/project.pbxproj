@@ -19,6 +19,9 @@
 		8095791F2F64699100CA9AF9 /* CreateHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8095791E2F64699100CA9AF9 /* CreateHabitView.swift */; };
 		809579212F6469A400CA9AF9 /* Color+Extension.swift in Resources */ = {isa = PBXBuildFile; fileRef = 809579202F6469A400CA9AF9 /* Color+Extension.swift */; };
 		809579252F646F0F00CA9AF9 /* ExampleHabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */; };
+		80EF53A72F648BF5002D17B3 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF53A62F648BF5002D17B3 /* DashboardViewModel.swift */; };
+		80EF53A92F648C06002D17B3 /* CreateHabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF53A82F648C06002D17B3 /* CreateHabitViewModel.swift */; };
+		80EF53AB2F648C24002D17B3 /* HabitDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF53AA2F648C24002D17B3 /* HabitDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +38,9 @@
 		8095791E2F64699100CA9AF9 /* CreateHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHabitView.swift; sourceTree = "<group>"; };
 		809579202F6469A400CA9AF9 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleHabitsView.swift; sourceTree = "<group>"; };
+		80EF53A62F648BF5002D17B3 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		80EF53A82F648C06002D17B3 /* CreateHabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHabitViewModel.swift; sourceTree = "<group>"; };
+		80EF53AA2F648C24002D17B3 /* HabitDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,18 +73,12 @@
 		809579092F64681500CA9AF9 /* HoboTracker */ = {
 			isa = PBXGroup;
 			children = (
-				809579202F6469A400CA9AF9 /* Color+Extension.swift */,
-				8095791E2F64699100CA9AF9 /* CreateHabitView.swift */,
-				8095791C2F64692600CA9AF9 /* MiniMonthCalendarView.swift */,
-				8095791A2F6468AB00CA9AF9 /* HabitDetailView.swift */,
-				809579182F64688500CA9AF9 /* HabitCell.swift */,
-				809579162F64687C00CA9AF9 /* DashboardView.swift */,
-				809579142F64684400CA9AF9 /* HoboTrackerApp.swift */,
 				809579122F64682600CA9AF9 /* Model */,
 				809579052F64681500CA9AF9 /* Assets.xcassets */,
-				809579062F64681500CA9AF9 /* ContentView.swift */,
-				809579082F64681500CA9AF9 /* Item.swift */,
-				809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */,
+				80EF53A52F648BE8002D17B3 /* ViewModels */,
+				80EF53AC2F648CC0002D17B3 /* Views */,
+				80EF53AD2F648CC4002D17B3 /* Extensions */,
+				80EF53AE2F648CCB002D17B3 /* App */,
 			);
 			path = HoboTracker;
 			sourceTree = "<group>";
@@ -87,8 +87,49 @@
 			isa = PBXGroup;
 			children = (
 				809579112F64682600CA9AF9 /* Habit.swift */,
+				809579082F64681500CA9AF9 /* Item.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		80EF53A52F648BE8002D17B3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				80EF53A62F648BF5002D17B3 /* DashboardViewModel.swift */,
+				80EF53A82F648C06002D17B3 /* CreateHabitViewModel.swift */,
+				80EF53AA2F648C24002D17B3 /* HabitDetailViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		80EF53AC2F648CC0002D17B3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8095791E2F64699100CA9AF9 /* CreateHabitView.swift */,
+				809579162F64687C00CA9AF9 /* DashboardView.swift */,
+				8095791A2F6468AB00CA9AF9 /* HabitDetailView.swift */,
+				809579182F64688500CA9AF9 /* HabitCell.swift */,
+				8095791C2F64692600CA9AF9 /* MiniMonthCalendarView.swift */,
+				809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */,
+				809579062F64681500CA9AF9 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		80EF53AD2F648CC4002D17B3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				809579202F6469A400CA9AF9 /* Color+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		80EF53AE2F648CCB002D17B3 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				809579142F64684400CA9AF9 /* HoboTrackerApp.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,11 +206,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8095791B2F6468AB00CA9AF9 /* HabitDetailView.swift in Sources */,
+				80EF53A92F648C06002D17B3 /* CreateHabitViewModel.swift in Sources */,
 				8095790B2F64681500CA9AF9 /* ContentView.swift in Sources */,
 				809579132F64682600CA9AF9 /* Habit.swift in Sources */,
 				809579192F64688500CA9AF9 /* HabitCell.swift in Sources */,
+				80EF53A72F648BF5002D17B3 /* DashboardViewModel.swift in Sources */,
 				809579172F64687C00CA9AF9 /* DashboardView.swift in Sources */,
 				8095790D2F64681500CA9AF9 /* Item.swift in Sources */,
+				80EF53AB2F648C24002D17B3 /* HabitDetailViewModel.swift in Sources */,
 				8095791F2F64699100CA9AF9 /* CreateHabitView.swift in Sources */,
 				8095791D2F64692600CA9AF9 /* MiniMonthCalendarView.swift in Sources */,
 				809579252F646F0F00CA9AF9 /* ExampleHabitsView.swift in Sources */,

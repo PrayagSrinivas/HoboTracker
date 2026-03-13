@@ -46,9 +46,13 @@ struct HabitCell: View {
             .buttonStyle(.borderless) 
         }
         .padding()
-        .background(Color(UIColor.secondarySystemGroupedBackground))
+        .background(Color(UIColor.tertiarySystemBackground))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.black.opacity(0.06), lineWidth: 1)
+        )
         .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 5, y: 2)
+        .shadow(color: .black.opacity(0.06), radius: 8, y: 3)
     }
     
     private func color(from hex: String) -> Color {
