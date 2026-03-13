@@ -29,48 +29,35 @@ struct HabitDetailView: View {
     private var loggedDaysSet: Set<Date> {
         Set(normalizedLoggedDays)
     }
-    
-    private var currentStreak: Int {
+
+    private var currentWeekDates: [Date] {
         let todayStart = calendar.startOfDay(for: today)
-        guard loggedDaysSet.contains(todayStart) else { return 0 }
-        
-        var streak = 0
-        var date = todayStart
-        while loggedDaysSet.contains(date) {
-            streak += 1
-            guard let previousDate = calendar.date(byAdding: .day, value: -1, to: date) else { break }
-            date = previousDate
+        guard let interval = calendar.dateInterval(of: .weekOfYear, for: todayStart) else { return [] }
+        return (0..<7).compactMap { offset in
+            calendar.date(byAdding: .day, value: offset, to: interval.start)
         }
-        return streak
     }
-    
-    private var maxStreak: Int {
-        guard normalizedLoggedDays.count > 1 else { return normalizedLoggedDays.count }
-        
-        var maxCount = 1
-        var currentCount = 1
-        
-        for index in 1..<normalizedLoggedDays.count {
-            let previous = normalizedLoggedDays[index - 1]
-            let current = normalizedLoggedDays[index]
-            let delta = calendar.dateComponents([.day], from: previous, to: current).day ?? 0
-            if delta == 1 {
-                currentCount += 1
-            } else {
-                maxCount = max(maxCount, currentCount)
-                currentCount = 1
-            }
-        }
-        
-        return max(maxCount, currentCount)
+
+    private var weekLoggedCount: Int {
+        currentWeekDates.filter { loggedDaysSet.contains(calendar.startOfDay(for: $0)) }.count
     }
-    
-    private var daysSinceLastLog: Int {
-        let todayStart = calendar.startOfDay(for: today)
-        if let lastLog = normalizedLoggedDays.last {
-            return calendar.dateComponents([.day], from: lastLog, to: todayStart).day ?? 0
-        }
-        return calendar.dateComponents([.day], from: habit.creationDate, to: todayStart).day ?? 0
+
+    private var monthLoggedCount: Int {
+        let month = calendar.component(.month, from: today)
+        let year = calendar.component(.year, from: today)
+        return normalizedLoggedDays.filter {
+            let components = calendar.dateComponents([.year, .month], from: $0)
+            return components.year == year && components.month == month
+        }.count
+    }
+
+    private var monthTotalDays: Int {
+        calendar.range(of: .day, in: .month, for: today)?.count ?? 30
+    }
+
+    private var monthProgress: Double {
+        guard monthTotalDays > 0 else { return 0 }
+        return Double(monthLoggedCount) / Double(monthTotalDays)
     }
     
     private var dailyLogs: [DayLog] {
@@ -100,7 +87,7 @@ struct HabitDetailView: View {
         ScrollView {
             VStack(spacing: 20) {
                 headerSection
-                statsSection
+                weeklySummaryCard
                 
                 if habit.loggedDates.isEmpty {
                     emptyState
@@ -132,20 +119,81 @@ struct HabitDetailView: View {
                 }
             }
             Spacer()
+            monthProgressRing
         }
     }
     
-    private var statsSection: some View {
-        VStack(spacing: 12) {
-            HStack(spacing: 12) {
-                statCard(title: "Current Streak", value: "\(currentStreak) days")
-                statCard(title: "Max Streak", value: "\(maxStreak) days")
-            }
-            HStack(spacing: 12) {
-                statCard(title: "Days Since Last Log", value: "\(daysSinceLastLog)")
-                statCard(title: "Total Logged", value: "\(normalizedLoggedDays.count)")
+    private var weeklySummaryCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Weekly Streak: \(weekLoggedCount) Days")
+                .font(.subheadline.bold())
+
+            HStack(spacing: 8) {
+                ForEach(Array(currentWeekDates.enumerated()), id: \.offset) { index, date in
+                    let isLogged = loggedDaysSet.contains(calendar.startOfDay(for: date))
+                    VStack(spacing: 6) {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(
+                                isLogged
+                                ? LinearGradient(
+                                    colors: [habitColor.opacity(1.0), habitColor.opacity(0.65)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                                : LinearGradient(
+                                    colors: [Color.gray.opacity(0.22), Color.gray.opacity(0.08)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .frame(height: 28)
+
+                        Text(shortWeekdaySymbol(for: index))
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
             }
         }
+        .padding()
+        .background(Color(UIColor.secondarySystemGroupedBackground))
+        .cornerRadius(16)
+    }
+
+    private var monthProgressRing: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.gray.opacity(0.2), lineWidth: 6)
+
+            Circle()
+                .trim(from: 0, to: monthProgress)
+                .stroke(
+                    LinearGradient(
+                        colors: [habitColor, habitColor.opacity(0.4)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    ),
+                    style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                )
+                .rotationEffect(.degrees(-90))
+
+            VStack(spacing: 2) {
+                Text("\(monthLoggedCount)/\(monthTotalDays)")
+                    .font(.caption.bold())
+                Text("Days")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .frame(width: 58, height: 58)
+    }
+
+    private func shortWeekdaySymbol(for index: Int) -> String {
+        let symbols = calendar.shortStandaloneWeekdaySymbols
+        let startIndex = calendar.firstWeekday - 1
+        let ordered = Array(symbols[startIndex...] + symbols[..<startIndex])
+        return ordered.indices.contains(index) ? ordered[index] : symbols[index % symbols.count]
     }
     
     private var chartSection: some View {
@@ -240,20 +288,6 @@ struct HabitDetailView: View {
         .padding(.top, 20)
     }
     
-    private func statCard(title: String, value: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Text(value)
-                .font(.headline)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color(UIColor.secondarySystemGroupedBackground))
-        .cornerRadius(12)
-    }
-    
     private func color(from hex: String) -> Color {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
@@ -320,4 +354,3 @@ private enum WeeklyRange: Int, CaseIterable {
         "\(rawValue) weeks"
     }
 }
-
