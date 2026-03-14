@@ -13,13 +13,21 @@ final class DashboardViewModel: ObservableObject {
         }
     }
 
-    func toggleHabit(_ habit: Habit, context: ModelContext) {
+    func toggleHabit(_ habit: Habit, context: ModelContext, userId: String?) {
         let today = Calendar.current.startOfDay(for: Date())
         if habit.isLoggedToday {
             habit.loggedDates.removeAll { Calendar.current.isDate($0, inSameDayAs: today) }
         } else {
             habit.loggedDates.append(today)
         }
+        habit.updatedAt = Date()
+        habit.syncStatus = "pending"
+        
+        // Ensure ownerId is set
+        if habit.ownerId == nil {
+            habit.ownerId = userId
+        }
+        
         try? context.save()
     }
 

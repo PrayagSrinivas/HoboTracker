@@ -9,11 +9,27 @@ import SwiftUI
 import SwiftData
 
 struct DashboardView: View {
-    @Query(sort: \Habit.creationDate, order: .forward) private var habits: [Habit]
+    @Query(sort: \Habit.creationDate, order: .forward) private var allHabits: [Habit]
     @Environment(\.modelContext) private var context
+    @EnvironmentObject private var appState: AppState
     @StateObject private var viewModel = DashboardViewModel()
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
+    // Filter habits to show only current user's habits
+    private var habits: [Habit] {
+        guard let currentUserId = appState.authService.userId else {
+            print("⚠️ DashboardView: No current user ID, showing all habits")
+            return allHabits
+        }
+        let filtered = allHabits.filter { habit in
+            // Case-insensitive comparison for UUID matching
+            let habitOwnerId = habit.ownerId?.lowercased()
+            return habitOwnerId == currentUserId.lowercased() || habit.ownerId == nil
+        }
+        print("📊 DashboardView: Showing \(filtered.count) habits for user \(currentUserId)")
+        return filtered
+    }
 
     var body: some View {
         NavigationStack {
@@ -23,7 +39,10 @@ struct DashboardView: View {
                         ForEach(habits) { habit in
                             NavigationLink(destination: HabitDetailView(habit: habit)) {
                                 HabitCell(habit: habit) {
-                                    viewModel.toggleHabit(habit, context: context)
+                                    viewModel.toggleHabit(habit, context: context, userId: appState.authService.userId)
+                                    Task { @MainActor in
+                                        await appState.syncWithContext(context)
+                                    }
                                 }
                             }
                             .buttonStyle(.plain) // Prevents the NavigationLink from hijacking the checkbox tap
@@ -35,7 +54,10 @@ struct DashboardView: View {
                         ForEach(habits) { habit in
                             NavigationLink(destination: HabitDetailView(habit: habit)) {
                                 HabitListRow(habit: habit, color: viewModel.color(from: habit.colorHex)) {
-                                    viewModel.toggleHabit(habit, context: context)
+                                    viewModel.toggleHabit(habit, context: context, userId: appState.authService.userId)
+                                    Task { @MainActor in
+                                        await appState.syncWithContext(context)
+                                    }
                                 }
                             }
                             .buttonStyle(.plain)

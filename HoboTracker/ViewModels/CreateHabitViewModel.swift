@@ -29,7 +29,7 @@ final class CreateHabitViewModel: ObservableObject {
         name.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
-    func save(context: ModelContext) {
+    func save(context: ModelContext) -> Habit {
         let newHabit = Habit(
             name: name,
             habitDescription: habitDescription,
@@ -38,11 +38,15 @@ final class CreateHabitViewModel: ObservableObject {
         )
 
         context.insert(newHabit)
+        newHabit.updatedAt = Date()
+        newHabit.syncStatus = "pending"
 
         name = ""
         habitDescription = ""
         selectedIcon = availableIcons[0]
         selectedColorHex = availableColors[4]
+
+        return newHabit
     }
 
     func color(from hex: String) -> Color {

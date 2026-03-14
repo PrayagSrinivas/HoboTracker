@@ -19,6 +19,23 @@
 		8095791F2F64699100CA9AF9 /* CreateHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8095791E2F64699100CA9AF9 /* CreateHabitView.swift */; };
 		809579212F6469A400CA9AF9 /* Color+Extension.swift in Resources */ = {isa = PBXBuildFile; fileRef = 809579202F6469A400CA9AF9 /* Color+Extension.swift */; };
 		809579252F646F0F00CA9AF9 /* ExampleHabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */; };
+		80E76DE72F6581CD00192F3A /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DE62F6581CD00192F3A /* Auth */; };
+		80E76DE92F6581CD00192F3A /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DE82F6581CD00192F3A /* Functions */; };
+		80E76DEB2F6581CD00192F3A /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DEA2F6581CD00192F3A /* PostgREST */; };
+		80E76DED2F6581CD00192F3A /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DEC2F6581CD00192F3A /* Realtime */; };
+		80E76DEF2F6581CD00192F3A /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DEE2F6581CD00192F3A /* Storage */; };
+		80E76DF12F6581CD00192F3A /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DF02F6581CD00192F3A /* Supabase */; };
+		80E76DF42F65832C00192F3A /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DF32F65832C00192F3A /* SupabaseConfig.swift */; };
+		80E76DF62F65833100192F3A /* SupabaseClientProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DF52F65833100192F3A /* SupabaseClientProvider.swift */; };
+		80E76DF82F65833F00192F3A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DF72F65833F00192F3A /* AuthService.swift */; };
+		80E76DFA2F65834600192F3A /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DF92F65834600192F3A /* NetworkMonitor.swift */; };
+		80E76DFC2F65835300192F3A /* SupabaseHabitStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DFB2F65835300192F3A /* SupabaseHabitStore.swift */; };
+		80E76DFE2F65836A00192F3A /* SyncEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DFD2F65836A00192F3A /* SyncEngine.swift */; };
+		80E76E002F65837300192F3A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76DFF2F65837300192F3A /* AppState.swift */; };
+		80E76E022F65837B00192F3A /* AuthGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76E012F65837B00192F3A /* AuthGateView.swift */; };
+		80E76E042F65838400192F3A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76E032F65838400192F3A /* LoginView.swift */; };
+		80E76E062F65838900192F3A /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76E052F65838900192F3A /* MainTabView.swift */; };
+		80E76E092F658E7300192F3A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E76E082F658E7300192F3A /* ProfileView.swift */; };
 		80EF53A72F648BF5002D17B3 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF53A62F648BF5002D17B3 /* DashboardViewModel.swift */; };
 		80EF53A92F648C06002D17B3 /* CreateHabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF53A82F648C06002D17B3 /* CreateHabitViewModel.swift */; };
 		80EF53AB2F648C24002D17B3 /* HabitDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EF53AA2F648C24002D17B3 /* HabitDetailViewModel.swift */; };
@@ -38,6 +55,18 @@
 		8095791E2F64699100CA9AF9 /* CreateHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHabitView.swift; sourceTree = "<group>"; };
 		809579202F6469A400CA9AF9 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleHabitsView.swift; sourceTree = "<group>"; };
+		80E76DF32F65832C00192F3A /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
+		80E76DF52F65833100192F3A /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
+		80E76DF72F65833F00192F3A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		80E76DF92F65834600192F3A /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		80E76DFB2F65835300192F3A /* SupabaseHabitStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseHabitStore.swift; sourceTree = "<group>"; };
+		80E76DFD2F65836A00192F3A /* SyncEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncEngine.swift; sourceTree = "<group>"; };
+		80E76DFF2F65837300192F3A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		80E76E012F65837B00192F3A /* AuthGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthGateView.swift; sourceTree = "<group>"; };
+		80E76E032F65838400192F3A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		80E76E052F65838900192F3A /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		80E76E072F65849400192F3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		80E76E082F658E7300192F3A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		80EF53A62F648BF5002D17B3 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		80EF53A82F648C06002D17B3 /* CreateHabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHabitViewModel.swift; sourceTree = "<group>"; };
 		80EF53AA2F648C24002D17B3 /* HabitDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailViewModel.swift; sourceTree = "<group>"; };
@@ -48,6 +77,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80E76DEB2F6581CD00192F3A /* PostgREST in Frameworks */,
+				80E76DE92F6581CD00192F3A /* Functions in Frameworks */,
+				80E76DF12F6581CD00192F3A /* Supabase in Frameworks */,
+				80E76DE72F6581CD00192F3A /* Auth in Frameworks */,
+				80E76DEF2F6581CD00192F3A /* Storage in Frameworks */,
+				80E76DED2F6581CD00192F3A /* Realtime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,12 +108,14 @@
 		809579092F64681500CA9AF9 /* HoboTracker */ = {
 			isa = PBXGroup;
 			children = (
+				80E76E072F65849400192F3A /* Info.plist */,
 				809579122F64682600CA9AF9 /* Model */,
 				809579052F64681500CA9AF9 /* Assets.xcassets */,
 				80EF53A52F648BE8002D17B3 /* ViewModels */,
 				80EF53AC2F648CC0002D17B3 /* Views */,
 				80EF53AD2F648CC4002D17B3 /* Extensions */,
 				80EF53AE2F648CCB002D17B3 /* App */,
+				80E76DF22F65832500192F3A /* Services */,
 			);
 			path = HoboTracker;
 			sourceTree = "<group>";
@@ -90,6 +127,19 @@
 				809579082F64681500CA9AF9 /* Item.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		80E76DF22F65832500192F3A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				80E76DF32F65832C00192F3A /* SupabaseConfig.swift */,
+				80E76DF52F65833100192F3A /* SupabaseClientProvider.swift */,
+				80E76DF72F65833F00192F3A /* AuthService.swift */,
+				80E76DF92F65834600192F3A /* NetworkMonitor.swift */,
+				80E76DFB2F65835300192F3A /* SupabaseHabitStore.swift */,
+				80E76DFD2F65836A00192F3A /* SyncEngine.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		80EF53A52F648BE8002D17B3 /* ViewModels */ = {
@@ -112,6 +162,10 @@
 				8095791C2F64692600CA9AF9 /* MiniMonthCalendarView.swift */,
 				809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */,
 				809579062F64681500CA9AF9 /* ContentView.swift */,
+				80E76E012F65837B00192F3A /* AuthGateView.swift */,
+				80E76E032F65838400192F3A /* LoginView.swift */,
+				80E76E052F65838900192F3A /* MainTabView.swift */,
+				80E76E082F658E7300192F3A /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				809579142F64684400CA9AF9 /* HoboTrackerApp.swift */,
+				80E76DFF2F65837300192F3A /* AppState.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -149,6 +204,12 @@
 			);
 			name = HoboTracker;
 			packageProductDependencies = (
+				80E76DE62F6581CD00192F3A /* Auth */,
+				80E76DE82F6581CD00192F3A /* Functions */,
+				80E76DEA2F6581CD00192F3A /* PostgREST */,
+				80E76DEC2F6581CD00192F3A /* Realtime */,
+				80E76DEE2F6581CD00192F3A /* Storage */,
+				80E76DF02F6581CD00192F3A /* Supabase */,
 			);
 			productName = HoboTracker;
 			productReference = 809578F52F6467F100CA9AF9 /* HoboTracker.app */;
@@ -178,6 +239,9 @@
 			);
 			mainGroup = 809578EC2F6467F100CA9AF9;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 809578F62F6467F100CA9AF9 /* Products */;
 			projectDirPath = "";
@@ -205,19 +269,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80E76DFE2F65836A00192F3A /* SyncEngine.swift in Sources */,
+				80E76DF62F65833100192F3A /* SupabaseClientProvider.swift in Sources */,
 				8095791B2F6468AB00CA9AF9 /* HabitDetailView.swift in Sources */,
 				80EF53A92F648C06002D17B3 /* CreateHabitViewModel.swift in Sources */,
 				8095790B2F64681500CA9AF9 /* ContentView.swift in Sources */,
 				809579132F64682600CA9AF9 /* Habit.swift in Sources */,
 				809579192F64688500CA9AF9 /* HabitCell.swift in Sources */,
 				80EF53A72F648BF5002D17B3 /* DashboardViewModel.swift in Sources */,
+				80E76E042F65838400192F3A /* LoginView.swift in Sources */,
+				80E76E062F65838900192F3A /* MainTabView.swift in Sources */,
 				809579172F64687C00CA9AF9 /* DashboardView.swift in Sources */,
+				80E76DFA2F65834600192F3A /* NetworkMonitor.swift in Sources */,
 				8095790D2F64681500CA9AF9 /* Item.swift in Sources */,
+				80E76E022F65837B00192F3A /* AuthGateView.swift in Sources */,
+				80E76E002F65837300192F3A /* AppState.swift in Sources */,
 				80EF53AB2F648C24002D17B3 /* HabitDetailViewModel.swift in Sources */,
+				80E76E092F658E7300192F3A /* ProfileView.swift in Sources */,
 				8095791F2F64699100CA9AF9 /* CreateHabitView.swift in Sources */,
 				8095791D2F64692600CA9AF9 /* MiniMonthCalendarView.swift in Sources */,
+				80E76DF42F65832C00192F3A /* SupabaseConfig.swift in Sources */,
+				80E76DFC2F65835300192F3A /* SupabaseHabitStore.swift in Sources */,
 				809579252F646F0F00CA9AF9 /* ExampleHabitsView.swift in Sources */,
 				809579152F64684400CA9AF9 /* HoboTrackerApp.swift in Sources */,
+				80E76DF82F65833F00192F3A /* AuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +430,7 @@
 				DEVELOPMENT_TEAM = 2RQ75FG8AT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HoboTracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -387,6 +463,7 @@
 				DEVELOPMENT_TEAM = 2RQ75FG8AT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HoboTracker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -431,6 +508,50 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		80E76DE62F6581CD00192F3A /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Auth;
+		};
+		80E76DE82F6581CD00192F3A /* Functions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		80E76DEA2F6581CD00192F3A /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		80E76DEC2F6581CD00192F3A /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		80E76DEE2F6581CD00192F3A /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+		};
+		80E76DF02F6581CD00192F3A /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80E76DE52F6581CD00192F3A /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 809578ED2F6467F100CA9AF9 /* Project object */;
 }

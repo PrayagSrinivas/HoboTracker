@@ -19,6 +19,10 @@ final class Habit {
     var colorHex: String 
     var loggedDates: [Date]
     var creationDate: Date
+    var updatedAt: Date
+    var ownerId: String?
+    var isDeleted: Bool
+    var syncStatus: String
     
     init(name: String, habitDescription: String, iconName: String, colorHex: String) {
         self.id = UUID()
@@ -28,6 +32,10 @@ final class Habit {
         self.colorHex = colorHex
         self.loggedDates = []
         self.creationDate = Date()
+        self.updatedAt = Date()
+        self.ownerId = nil
+        self.isDeleted = false
+        self.syncStatus = "pending"
     }
     
     // Helper to check if logged today
