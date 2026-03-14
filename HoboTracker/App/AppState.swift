@@ -21,6 +21,8 @@ final class AppState: ObservableObject {
     @Published var allowOffline = false
     @Published var isAuthenticated = false
     @Published var lastSyncError: String?
+    @Published var isLoading = false
+    @Published var loadingMessage: String?
 
     private var modelContext: ModelContext?
     private var cancellables: Set<AnyCancellable> = []
@@ -46,6 +48,9 @@ final class AppState: ObservableObject {
     }
 
     func signInWithGoogle() async {
+        showLoading()
+        defer { hideLoading() }
+        
         do {
             print("🔐 AppState: Initiating Google sign-in...")
             try await authService.signInWithGoogle()
@@ -53,10 +58,8 @@ final class AppState: ObservableObject {
             print("🔐 AppState: isAuthenticated = \(authService.isAuthenticated)")
             print("🔐 AppState: user ID = \(authService.userId ?? "none")")
             
-            // Manually update isAuthenticated to ensure UI updates
             isAuthenticated = authService.isAuthenticated
             
-            // Sync the new user's habits from Supabase
             if let context = modelContext {
                 print("🔄 AppState: Syncing new user's habits from Supabase...")
                 await syncEngine.syncIfNeeded(context: context)
@@ -68,6 +71,9 @@ final class AppState: ObservableObject {
     }
     
     func signInWithEmail(email: String, password: String) async {
+        showLoading()
+        defer { hideLoading() }
+        
         do {
             print("🔐 AppState: Initiating email sign-in for: \(email)")
             try await authService.signInWithEmail(email: email, password: password)
@@ -75,10 +81,8 @@ final class AppState: ObservableObject {
             print("🔐 AppState: isAuthenticated = \(authService.isAuthenticated)")
             print("🔐 AppState: user ID = \(authService.userId ?? "none")")
             
-            // Manually update isAuthenticated to ensure UI updates
             isAuthenticated = authService.isAuthenticated
             
-            // Sync the new user's habits from Supabase
             if let context = modelContext {
                 print("🔄 AppState: Syncing user's habits from Supabase...")
                 await syncEngine.syncIfNeeded(context: context)
@@ -90,6 +94,9 @@ final class AppState: ObservableObject {
     }
     
     func signUpWithEmail(email: String, password: String) async {
+        showLoading()
+        defer { hideLoading() }
+        
         do {
             print("🔐 AppState: Initiating email sign-up for: \(email)")
             try await authService.signUpWithEmail(email: email, password: password)
@@ -97,10 +104,8 @@ final class AppState: ObservableObject {
             print("🔐 AppState: isAuthenticated = \(authService.isAuthenticated)")
             print("🔐 AppState: user ID = \(authService.userId ?? "none")")
             
-            // Manually update isAuthenticated to ensure UI updates
             isAuthenticated = authService.isAuthenticated
             
-            // Sync the new user's habits from Supabase
             if let context = modelContext {
                 print("🔄 AppState: Syncing user's habits from Supabase...")
                 await syncEngine.syncIfNeeded(context: context)
@@ -115,9 +120,6 @@ final class AppState: ObservableObject {
         print("🔐 AppState: Signing out user: \(authService.userId ?? "unknown")")
         await authService.signOut()
         isAuthenticated = false
-        
-        // Note: We keep local habits so they can be synced if user signs back in
-        // If you want to clear all habits on sign out, call clearLocalHabits()
         print("🔐 AppState: User signed out, local habits preserved")
     }
     
@@ -136,10 +138,7 @@ final class AppState: ObservableObject {
     }
     
     func switchUser() async {
-        // Called when a new user signs in
-        // Pull habits for the new user from Supabase
         guard authService.isAuthenticated, let context = modelContext else { return }
-        
         print("🔄 AppState: New user signed in, syncing their habits...")
         await syncEngine.syncIfNeeded(context: context)
     }
@@ -149,6 +148,9 @@ final class AppState: ObservableObject {
             print("🔐 AppState: Cannot sync - not authenticated or no model context")
             return
         }
+        showLoading()
+        defer { hideLoading() }
+        
         print("🔄 AppState: Starting sync...")
         await syncEngine.syncIfNeeded(context: context)
     }
@@ -158,15 +160,29 @@ final class AppState: ObservableObject {
             print("🔐 AppState: Cannot sync - not authenticated")
             return
         }
-        print("🔄 AppState: Starting sync with provided context...")
+        showLoading()
+        defer { hideLoading() }
         
-        // Try the provided context first
+        print("🔄 AppState: Starting sync with provided context...")
         await syncEngine.syncIfNeeded(context: context)
         
-        // If we have a different stored context, also try that
         if let storedContext = modelContext, storedContext !== context {
             print("🔄 AppState: Also syncing with stored main context...")
             await syncEngine.syncIfNeeded(context: storedContext)
         }
+    }
+    
+    // MARK: - Loading State Helpers
+    
+    func showLoading(_ message: String? = nil) {
+        isLoading = true
+        loadingMessage = message
+        print("⏳ AppState: Showing loader")
+    }
+    
+    func hideLoading() {
+        isLoading = false
+        loadingMessage = nil
+        print("✅ AppState: Hiding loader")
     }
 }

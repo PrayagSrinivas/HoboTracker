@@ -30,6 +30,24 @@ final class DashboardViewModel: ObservableObject {
         
         try? context.save()
     }
+    
+    func deleteHabit(_ habit: Habit, context: ModelContext) {
+        print("🗑️ DashboardViewModel: Deleting habit '\(habit.name)' (ID: \(habit.id))")
+        
+        // Mark as deleted for sync
+        habit.isDeleted = true
+        habit.updatedAt = Date()
+        habit.syncStatus = "pending"
+        
+        // Save to trigger sync, then actually delete
+        try? context.save()
+        
+        // Delete from local database
+        context.delete(habit)
+        try? context.save()
+        
+        print("✅ DashboardViewModel: Habit deleted locally")
+    }
 
     func color(from hex: String) -> Color {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

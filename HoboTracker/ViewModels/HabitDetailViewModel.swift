@@ -10,6 +10,7 @@ final class HabitDetailViewModel: ObservableObject {
     @Published var chartMode: ChartMode = .daily
     @Published var dailyRange: DailyRange = .days30
     @Published var weeklyRange: WeeklyRange = .weeks12
+    @Published var viewMode: ViewMode = .week
 
     init(habit: Habit) {
         self.habit = habit
@@ -52,10 +53,110 @@ final class HabitDetailViewModel: ObservableObject {
     var monthTotalDays: Int {
         calendar.range(of: .day, in: .month, for: today)?.count ?? 30
     }
+    
+    var yearLoggedCount: Int {
+        let year = calendar.component(.year, from: today)
+        return normalizedLoggedDays.filter {
+            let components = calendar.dateComponents([.year], from: $0)
+            return components.year == year
+        }.count
+    }
+    
+    var yearTotalDays: Int {
+        let year = calendar.component(.year, from: today)
+        let isLeapYear = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)
+        return isLeapYear ? 366 : 365
+    }
+
+    // Dynamic progress based on view mode
+    var progressCount: Int {
+        switch viewMode {
+        case .week:
+            return weekLoggedCount
+        case .month:
+            return monthLoggedCount
+        case .year:
+            return yearLoggedCount
+        }
+    }
+    
+    var progressTotal: Int {
+        switch viewMode {
+        case .week:
+            return 7
+        case .month:
+            return monthTotalDays
+        case .year:
+            return yearTotalDays
+        }
+    }
+    
+    var progress: Double {
+        guard progressTotal > 0 else { return 0 }
+        return Double(progressCount) / Double(progressTotal)
+    }
 
     var monthProgress: Double {
         guard monthTotalDays > 0 else { return 0 }
         return Double(monthLoggedCount) / Double(monthTotalDays)
+    }
+    
+    var weeksInCurrentMonth: [WeekInMonth] {
+        let currentMonth = calendar.component(.month, from: today)
+        let currentYear = calendar.component(.year, from: today)
+        
+        // Get first day of month
+        var components = DateComponents()
+        components.year = currentYear
+        components.month = currentMonth
+        components.day = 1
+        
+        guard let firstDayOfMonth = calendar.date(from: components) else { return [] }
+        
+        // Get the start of the week containing the first day of the month
+        guard let weekStart = calendar.dateInterval(of: .weekOfYear, for: firstDayOfMonth)?.start else { return [] }
+        
+        var weeks: [WeekInMonth] = []
+        var currentWeekStart = weekStart
+        var weekNumber = 0
+        
+        // Generate weeks until we've covered the entire month
+        while true {
+            var days: [Date] = []
+            for dayOffset in 0..<7 {
+                if let day = calendar.date(byAdding: .day, value: dayOffset, to: currentWeekStart) {
+                    days.append(day)
+                }
+            }
+            
+            // Check if this week contains any days from the current month
+            let hasCurrentMonthDays = days.contains { date in
+                let month = calendar.component(.month, from: date)
+                return month == currentMonth
+            }
+            
+            if hasCurrentMonthDays {
+                weeks.append(WeekInMonth(weekNumber: weekNumber, month: currentMonth, days: days))
+                weekNumber += 1
+            }
+            
+            // Move to next week
+            guard let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: currentWeekStart) else { break }
+            currentWeekStart = nextWeek
+            
+            // Check if we've moved past the current month
+            let nextWeekMonth = calendar.component(.month, from: currentWeekStart)
+            if nextWeekMonth != currentMonth && !hasCurrentMonthDays {
+                break
+            }
+            
+            // Safety check: don't generate more than 6 weeks
+            if weekNumber >= 6 {
+                break
+            }
+        }
+        
+        return weeks
     }
 
     var dailyLogs: [DayLog] {
@@ -156,4 +257,29 @@ enum WeeklyRange: Int, CaseIterable {
     var title: String {
         "\(rawValue) weeks"
     }
+}
+
+enum ViewMode: String, CaseIterable {
+    case week = "Week"
+    case month = "Month"
+    case year = "Year"
+    
+    var iconName: String {
+        switch self {
+        case .week:
+            return "calendar.badge.clock"
+        case .month:
+            return "calendar"
+        case .year:
+            return "calendar.badge.checkmark"
+        }
+    }
+}
+
+struct WeekInMonth: Identifiable {
+    let weekNumber: Int
+    let month: Int
+    let days: [Date]
+    
+    var id: Int { weekNumber }
 }

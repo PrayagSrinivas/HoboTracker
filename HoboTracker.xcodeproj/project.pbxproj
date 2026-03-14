@@ -19,6 +19,9 @@
 		8095791F2F64699100CA9AF9 /* CreateHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8095791E2F64699100CA9AF9 /* CreateHabitView.swift */; };
 		809579212F6469A400CA9AF9 /* Color+Extension.swift in Resources */ = {isa = PBXBuildFile; fileRef = 809579202F6469A400CA9AF9 /* Color+Extension.swift */; };
 		809579252F646F0F00CA9AF9 /* ExampleHabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */; };
+		80BE30242F65DE8900CDFC27 /* HabitListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE30232F65DE8900CDFC27 /* HabitListRow.swift */; };
+		80BE30262F65E07800CDFC27 /* HabitListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */; };
+		80BE30282F65F19600CDFC27 /* ModernWeekRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */; };
 		80E76DE72F6581CD00192F3A /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DE62F6581CD00192F3A /* Auth */; };
 		80E76DE92F6581CD00192F3A /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DE82F6581CD00192F3A /* Functions */; };
 		80E76DEB2F6581CD00192F3A /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DEA2F6581CD00192F3A /* PostgREST */; };
@@ -55,6 +58,9 @@
 		8095791E2F64699100CA9AF9 /* CreateHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateHabitView.swift; sourceTree = "<group>"; };
 		809579202F6469A400CA9AF9 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleHabitsView.swift; sourceTree = "<group>"; };
+		80BE30232F65DE8900CDFC27 /* HabitListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitListRow.swift; sourceTree = "<group>"; };
+		80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitListHeaderView.swift; sourceTree = "<group>"; };
+		80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernWeekRow.swift; sourceTree = "<group>"; };
 		80E76DF32F65832C00192F3A /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
 		80E76DF52F65833100192F3A /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
 		80E76DF72F65833F00192F3A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -155,6 +161,9 @@
 		80EF53AC2F648CC0002D17B3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */,
+				80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */,
+				80BE30232F65DE8900CDFC27 /* HabitListRow.swift */,
 				8095791E2F64699100CA9AF9 /* CreateHabitView.swift */,
 				809579162F64687C00CA9AF9 /* DashboardView.swift */,
 				8095791A2F6468AB00CA9AF9 /* HabitDetailView.swift */,
@@ -275,10 +284,12 @@
 				80EF53A92F648C06002D17B3 /* CreateHabitViewModel.swift in Sources */,
 				8095790B2F64681500CA9AF9 /* ContentView.swift in Sources */,
 				809579132F64682600CA9AF9 /* Habit.swift in Sources */,
+				80BE30242F65DE8900CDFC27 /* HabitListRow.swift in Sources */,
 				809579192F64688500CA9AF9 /* HabitCell.swift in Sources */,
 				80EF53A72F648BF5002D17B3 /* DashboardViewModel.swift in Sources */,
 				80E76E042F65838400192F3A /* LoginView.swift in Sources */,
 				80E76E062F65838900192F3A /* MainTabView.swift in Sources */,
+				80BE30282F65F19600CDFC27 /* ModernWeekRow.swift in Sources */,
 				809579172F64687C00CA9AF9 /* DashboardView.swift in Sources */,
 				80E76DFA2F65834600192F3A /* NetworkMonitor.swift in Sources */,
 				8095790D2F64681500CA9AF9 /* Item.swift in Sources */,
@@ -288,6 +299,7 @@
 				80E76E092F658E7300192F3A /* ProfileView.swift in Sources */,
 				8095791F2F64699100CA9AF9 /* CreateHabitView.swift in Sources */,
 				8095791D2F64692600CA9AF9 /* MiniMonthCalendarView.swift in Sources */,
+				80BE30262F65E07800CDFC27 /* HabitListHeaderView.swift in Sources */,
 				80E76DF42F65832C00192F3A /* SupabaseConfig.swift in Sources */,
 				80E76DFC2F65835300192F3A /* SupabaseHabitStore.swift in Sources */,
 				809579252F646F0F00CA9AF9 /* ExampleHabitsView.swift in Sources */,

@@ -13,11 +13,10 @@ struct DashboardView: View {
     @Environment(\.modelContext) private var context
     @EnvironmentObject private var appState: AppState
     @StateObject private var viewModel = DashboardViewModel()
-    
-    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    @State private var searchText = ""
     
     // Filter habits to show only current user's habits
-    private var habits: [Habit] {
+    private var userHabits: [Habit] {
         guard let currentUserId = appState.authService.userId else {
             print("⚠️ DashboardView: No current user ID, showing all habits")
             return allHabits
@@ -30,52 +29,59 @@ struct DashboardView: View {
         print("📊 DashboardView: Showing \(filtered.count) habits for user \(currentUserId)")
         return filtered
     }
+    
+    // Filter by search text
+    private var habits: [Habit] {
+        if searchText.isEmpty {
+            return userHabits
+        } else {
+            return userHabits.filter { habit in
+                habit.name.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                if viewModel.isGridLayout {
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(habits) { habit in
-                            NavigationLink(destination: HabitDetailView(habit: habit)) {
-                                HabitCell(habit: habit) {
-                                    viewModel.toggleHabit(habit, context: context, userId: appState.authService.userId)
-                                    Task { @MainActor in
-                                        await appState.syncWithContext(context)
-                                    }
-                                }
+            VStack(spacing: 0) {
+                HabitListHeaderView()
+                    .padding(.horizontal)
+                    .padding(.top, 8)
+                
+                List {
+                    ForEach(habits) { habit in
+                        // 1. The visible custom row
+                        HabitListRow(habit: habit, color: viewModel.color(from: habit.colorHex)) {
+                            viewModel.toggleHabit(habit, context: context, userId: appState.authService.userId)
+                            Task { @MainActor in
+                                await appState.syncWithContext(context)
                             }
-                            .buttonStyle(.plain) // Prevents the NavigationLink from hijacking the checkbox tap
+                        }
+                        // 2. The hidden NavigationLink hack
+                        .background(
+                            NavigationLink(destination: HabitDetailView(habit: habit)) {
+                                EmptyView()
+                            }
+                                .opacity(0)
+                        )
+                        // 3. Row Styling & Swipe Actions
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                deleteHabit(habit)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
                         }
                     }
-                    .padding()
-                } else {
-                    LazyVStack(spacing: 16) {
-                        ForEach(habits) { habit in
-                            NavigationLink(destination: HabitDetailView(habit: habit)) {
-                                HabitListRow(habit: habit, color: viewModel.color(from: habit.colorHex)) {
-                                    viewModel.toggleHabit(habit, context: context, userId: appState.authService.userId)
-                                    Task { @MainActor in
-                                        await appState.syncWithContext(context)
-                                    }
-                                }
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                    .padding()
                 }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .environment(\.defaultMinListRowHeight, 0)
             }
-            .navigationTitle("My Activity")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        viewModel.toggleLayout()
-                    } label: {
-                        Image(systemName: viewModel.isGridLayout ? "list.bullet" : "square.grid.2x2")
-                    }
-                    .accessibilityLabel(viewModel.isGridLayout ? "Switch to List" : "Switch to Grid")
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         viewModel.isShowingCreateHabit = true
@@ -85,84 +91,36 @@ struct DashboardView: View {
                     .accessibilityLabel("Create Habit")
                 }
             }
+            .searchable(text: $searchText, prompt: "Search habits")
             .navigationDestination(isPresented: $viewModel.isShowingCreateHabit) {
                 CreateHabitView()
                     .navigationTitle("Create Habit")
             }
         }
     }
-}
-
-private struct HabitListRow: View {
-    let habit: Habit
-    let color: Color
-    let onToggle: () -> Void
-    private let calendar = Calendar.current
-
-    private var weekDates: [Date] {
-        let today = calendar.startOfDay(for: Date())
-        guard let interval = calendar.dateInterval(of: .weekOfYear, for: today) else { return [] }
-        return (0..<7).compactMap { offset in
-            calendar.date(byAdding: .day, value: offset, to: interval.start)
+    
+    private func deleteHabit(_ habit: Habit) {
+        print("🗑️ DashboardView: Deleting habit '\(habit.name)'")
+        
+        // Mark as deleted and sync
+        habit.isDeleted = true
+        habit.updatedAt = Date()
+        habit.syncStatus = "pending"
+        
+        // Save to mark as deleted
+        try? context.save()
+        
+        // Delete from local database
+        context.delete(habit)
+        try? context.save()
+        
+        print("✅ DashboardView: Habit deleted locally")
+        
+        // Trigger sync in background
+        Task { @MainActor in
+            await appState.syncWithContext(context)
         }
     }
-
-    private var loggedDaysSet: Set<Date> {
-        Set(habit.loggedDates.map { calendar.startOfDay(for: $0) })
-    }
-
-    var body: some View {
-        HStack(spacing: 12) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(color.opacity(0.15))
-                    .frame(width: 40, height: 40)
-                Image(systemName: habit.iconName)
-                    .foregroundColor(color)
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text(habit.name)
-                    .font(.headline)
-
-                HStack(spacing: 6) {
-                    ForEach(weekDates, id: \.self) { date in
-                        let isLogged = loggedDaysSet.contains(calendar.startOfDay(for: date))
-                        RoundedRectangle(cornerRadius: 6)
-                            .fill(
-                                isLogged
-                                ? LinearGradient(
-                                    colors: [color.opacity(1.0), color.opacity(0.65)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                                : LinearGradient(
-                                    colors: [Color.gray.opacity(0.22), Color.gray.opacity(0.08)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 18, height: 12)
-                    }
-                }
-            }
-
-            Spacer()
-
-            Button(action: onToggle) {
-                Image(systemName: habit.isLoggedToday ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(habit.isLoggedToday ? color : .gray)
-                    .font(.title3)
-            }
-            .buttonStyle(.borderless)
-        }
-        .padding()
-        .background(Color(UIColor.tertiarySystemBackground))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.black.opacity(0.06), lineWidth: 1)
-        )
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.06), radius: 8, y: 3)
-    }
 }
+
+
