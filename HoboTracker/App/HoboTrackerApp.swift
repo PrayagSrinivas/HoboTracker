@@ -17,12 +17,21 @@ struct HoboTracker: App {
     let modelContainer: ModelContainer
     
     init() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        appearance.backgroundColor = UIColor.systemBackground
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+
         do {
             modelContainer = try ModelContainer(for: Habit.self)
             print("📦 HoboTrackerApp: ModelContainer created")
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
         }
+
     }
 
     var body: some Scene {

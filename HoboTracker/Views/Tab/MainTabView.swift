@@ -18,5 +18,6 @@ struct MainTabView: View {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
         }
+        .tint(.primary)
     }
 }
