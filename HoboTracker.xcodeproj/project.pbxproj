@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8095790A2F64681500CA9AF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809579052F64681500CA9AF9 /* Assets.xcassets */; };
-		8095790B2F64681500CA9AF9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579062F64681500CA9AF9 /* ContentView.swift */; };
 		8095790D2F64681500CA9AF9 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579082F64681500CA9AF9 /* Item.swift */; };
 		809579132F64682600CA9AF9 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579112F64682600CA9AF9 /* Habit.swift */; };
 		809579152F64684400CA9AF9 /* HoboTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809579142F64684400CA9AF9 /* HoboTrackerApp.swift */; };
@@ -22,6 +21,7 @@
 		80BE30242F65DE8900CDFC27 /* HabitListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE30232F65DE8900CDFC27 /* HabitListRow.swift */; };
 		80BE30262F65E07800CDFC27 /* HabitListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */; };
 		80BE30282F65F19600CDFC27 /* ModernWeekRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */; };
+		80C075752F667B0300C8AD18 /* YearCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C075742F667B0300C8AD18 /* YearCalendarView.swift */; };
 		80E76DE72F6581CD00192F3A /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DE62F6581CD00192F3A /* Auth */; };
 		80E76DE92F6581CD00192F3A /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DE82F6581CD00192F3A /* Functions */; };
 		80E76DEB2F6581CD00192F3A /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = 80E76DEA2F6581CD00192F3A /* PostgREST */; };
@@ -47,7 +47,6 @@
 /* Begin PBXFileReference section */
 		809578F52F6467F100CA9AF9 /* HoboTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoboTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809579052F64681500CA9AF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		809579062F64681500CA9AF9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		809579082F64681500CA9AF9 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		809579112F64682600CA9AF9 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 		809579142F64684400CA9AF9 /* HoboTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoboTrackerApp.swift; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		80BE30232F65DE8900CDFC27 /* HabitListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitListRow.swift; sourceTree = "<group>"; };
 		80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitListHeaderView.swift; sourceTree = "<group>"; };
 		80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModernWeekRow.swift; sourceTree = "<group>"; };
+		80C075742F667B0300C8AD18 /* YearCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCalendarView.swift; sourceTree = "<group>"; };
 		80E76DF32F65832C00192F3A /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
 		80E76DF52F65833100192F3A /* SupabaseClientProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClientProvider.swift; sourceTree = "<group>"; };
 		80E76DF72F65833F00192F3A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -135,6 +135,69 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		80C075762F667BB400C8AD18 /* HabitDetails */ = {
+			isa = PBXGroup;
+			children = (
+				80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */,
+				8095791A2F6468AB00CA9AF9 /* HabitDetailView.swift */,
+				80C075742F667B0300C8AD18 /* YearCalendarView.swift */,
+			);
+			path = HabitDetails;
+			sourceTree = "<group>";
+		};
+		80C075772F667BFE00C8AD18 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				80BE30232F65DE8900CDFC27 /* HabitListRow.swift */,
+				80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */,
+				809579162F64687C00CA9AF9 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		80C075782F667C1700C8AD18 /* CreateHabit */ = {
+			isa = PBXGroup;
+			children = (
+				8095791E2F64699100CA9AF9 /* CreateHabitView.swift */,
+			);
+			path = CreateHabit;
+			sourceTree = "<group>";
+		};
+		80C075792F667C2700C8AD18 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				809579182F64688500CA9AF9 /* HabitCell.swift */,
+				8095791C2F64692600CA9AF9 /* MiniMonthCalendarView.swift */,
+				809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
+		80C0757A2F667C6000C8AD18 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				80E76E082F658E7300192F3A /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		80C0757B2F667C6B00C8AD18 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				80E76E012F65837B00192F3A /* AuthGateView.swift */,
+				80E76E032F65838400192F3A /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		80C0757C2F667C7700C8AD18 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				80E76E052F65838900192F3A /* MainTabView.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
 		80E76DF22F65832500192F3A /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,20 +224,13 @@
 		80EF53AC2F648CC0002D17B3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				80BE30272F65F19600CDFC27 /* ModernWeekRow.swift */,
-				80BE30252F65E07800CDFC27 /* HabitListHeaderView.swift */,
-				80BE30232F65DE8900CDFC27 /* HabitListRow.swift */,
-				8095791E2F64699100CA9AF9 /* CreateHabitView.swift */,
-				809579162F64687C00CA9AF9 /* DashboardView.swift */,
-				8095791A2F6468AB00CA9AF9 /* HabitDetailView.swift */,
-				809579182F64688500CA9AF9 /* HabitCell.swift */,
-				8095791C2F64692600CA9AF9 /* MiniMonthCalendarView.swift */,
-				809579242F646F0F00CA9AF9 /* ExampleHabitsView.swift */,
-				809579062F64681500CA9AF9 /* ContentView.swift */,
-				80E76E012F65837B00192F3A /* AuthGateView.swift */,
-				80E76E032F65838400192F3A /* LoginView.swift */,
-				80E76E052F65838900192F3A /* MainTabView.swift */,
-				80E76E082F658E7300192F3A /* ProfileView.swift */,
+				80C0757C2F667C7700C8AD18 /* Tab */,
+				80C0757B2F667C6B00C8AD18 /* Login */,
+				80C0757A2F667C6000C8AD18 /* Profile */,
+				80C075792F667C2700C8AD18 /* Example */,
+				80C075782F667C1700C8AD18 /* CreateHabit */,
+				80C075772F667BFE00C8AD18 /* Dashboard */,
+				80C075762F667BB400C8AD18 /* HabitDetails */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -282,9 +338,9 @@
 				80E76DF62F65833100192F3A /* SupabaseClientProvider.swift in Sources */,
 				8095791B2F6468AB00CA9AF9 /* HabitDetailView.swift in Sources */,
 				80EF53A92F648C06002D17B3 /* CreateHabitViewModel.swift in Sources */,
-				8095790B2F64681500CA9AF9 /* ContentView.swift in Sources */,
 				809579132F64682600CA9AF9 /* Habit.swift in Sources */,
 				80BE30242F65DE8900CDFC27 /* HabitListRow.swift in Sources */,
+				80C075752F667B0300C8AD18 /* YearCalendarView.swift in Sources */,
 				809579192F64688500CA9AF9 /* HabitCell.swift in Sources */,
 				80EF53A72F648BF5002D17B3 /* DashboardViewModel.swift in Sources */,
 				80E76E042F65838400192F3A /* LoginView.swift in Sources */,

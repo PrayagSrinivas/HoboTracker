@@ -1,5 +1,5 @@
 //
-//  YearCalendarView.swift
+//  YearCalendarView 2.swift
 //  HoboTracker
 //
 //  Created by Srinivas Prayag Sahu on 15/03/26.
@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - Year Calendar View
 struct YearCalendarView: View {
     let loggedDates: [Date]
     let color: Color
@@ -19,7 +20,7 @@ struct YearCalendarView: View {
         let currentYear = calendar.component(.year, from: today)
         
         VStack(spacing: 16) {
-            Text("\(currentYear)")
+            Text(verbatim: "\(currentYear)")
                 .font(.title2.bold())
                 .foregroundColor(.primary)
             
@@ -29,7 +30,8 @@ struct YearCalendarView: View {
                         Text(monthName(for: month))
                             .font(.caption.bold())
                             .foregroundColor(.secondary)
-                        
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 16, alignment: .center)
                         MiniMonthGridView(
                             month: month,
                             year: currentYear,
@@ -37,6 +39,7 @@ struct YearCalendarView: View {
                             color: color
                         )
                     }
+                    .frame(maxWidth: .infinity, alignment: .top)
                 }
             }
         }
@@ -63,35 +66,49 @@ struct MiniMonthGridView: View {
     let color: Color
     
     private let calendar = Calendar.current
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: 7)
     
+    private let cellSize: CGFloat = 10
+    private let cellSpacing: CGFloat = 3
+    
+    private var columns: [GridItem] {
+        Array(repeating: GridItem(.fixed(cellSize), spacing: cellSpacing), count: 7)
+    }
+
     var body: some View {
         let daysInMonth = getDaysInMonth()
         let firstWeekday = getFirstWeekday()
         let loggedDays = getLoggedDaysInMonth()
         
-        LazyVGrid(columns: columns, spacing: 2) {
-            // Pad beginning
+        let totalCellsNeeded = 42
+        let trailingEmptyCells = totalCellsNeeded - (firstWeekday + daysInMonth)
+
+        LazyVGrid(columns: columns, spacing: cellSpacing) {
+
             ForEach(0..<firstWeekday, id: \.self) { _ in
                 Color.clear
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: .infinity)
+                    .frame(width: cellSize, height: cellSize)
             }
-            
-            // Draw days
+
             ForEach(1...daysInMonth, id: \.self) { day in
                 let isLogged = loggedDays.contains(day)
-                
-                RoundedRectangle(cornerRadius: 3)
+
+                RoundedRectangle(cornerRadius: 2)
                     .fill(
                         isLogged
                         ? color.opacity(0.8)
                         : Color.gray.opacity(0.15)
                     )
-                    .aspectRatio(1, contentMode: .fit)
-                    .frame(maxWidth: .infinity)
+                    .frame(width: cellSize, height: cellSize)
+            }
+
+            if trailingEmptyCells > 0 {
+                ForEach(0..<trailingEmptyCells, id: \.self) { _ in
+                    Color.clear
+                        .frame(width: cellSize, height: cellSize)
+                }
             }
         }
+        .frame(height: (cellSize * 6) + (cellSpacing * 5))
     }
     
     private func getLoggedDaysInMonth() -> Set<Int> {
